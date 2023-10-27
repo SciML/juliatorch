@@ -1,6 +1,6 @@
 # JuliaTorch
 
-[![CI](https://github.com/SciML/diffeqpy/workflows/CI/badge.svg)](https://github.com/SciML/diffeqpy/actions)
+[![CI](https://github.com/LilithHafner/juliatorch/workflows/CI/badge.svg)](https://github.com/LilithHafner/juliatorch/actions)
 
 juliatorch lets you convert [Julia](https://julialang.org/) functions to
 [PyTorch `autograd.Function`s](https://pytorch.org/docs/stable/autograd.html), automatically
@@ -15,18 +15,18 @@ For bug reports, feature requests, etc., please submit an issue.
 
 ...
 
-<!-- To install diffeqpy, use pip:
+<!-- To install juliatorch, use pip:
 
 ```
-pip install diffeqpy
+pip install juliatorch
 ```
 
-To install Julia packages required (and Julia if needed) for diffeqpy, open up Python
+To install Julia packages required (and Julia if needed) for juliatorch, open up Python
 interpreter then run:
 
 ```pycon
->>> import diffeqpy
->>> diffeqpy.install()
+>>> import juliatorch
+>>> juliatorch.install()
 ``` -->
 
 and you're good!
@@ -40,11 +40,11 @@ and you're good!
 Import and setup the solvers available in *DifferentialEquations.jl* via the command:
 
 ```py
-from diffeqpy import de
+from juliatorch import de
 ```
 In case only the solvers available in *OrdinaryDiffEq.jl* are required then use the command:
 ```py
-from diffeqpy import ode
+from juliatorch import ode
 ```
 The general flow for using the package is to follow exactly as would be done
 in Julia, except add `de.` or `ode.` in front. Note that `ode.` has lesser loading time and a smaller memory footprint compared to `de.`.

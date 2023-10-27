@@ -7,7 +7,7 @@ import torch as _torch
 from torch.autograd import Function as _Function
 
 _loss = _jl.seval("loss(f, grad) = x -> (sum(pyconvert(Array, f(x)) .* grad))")
-_jl.seval('import Pkg; Pkg.activate("juliatorch", shared=true')
+_jl.seval('import Pkg; Pkg.activate("juliatorch", shared=true)')
 
 try:
     gradient = _jl.seval("using ForwardDiff: gradient; gradient")

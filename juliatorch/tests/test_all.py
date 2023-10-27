@@ -1,4 +1,5 @@
 from .. import JuliaFunction
+from juliacall import Main as jl
 import torch
 from torch.autograd import gradcheck
 import pytest
@@ -9,11 +10,11 @@ def test_gradcheck_of_trivial_function():
     f2 = lambda x: f(x) # hack to work around https://github.com/JuliaPy/PythonCall.jl/issues/390
 
     # Use it by calling the apply method:
-    output0 = f(x)
+    output0 = 2 * x
     output1 = JuliaFunction.apply(f, x)
-    output2 = f2(x)
-    output3 = JuliaFunction.apply(f2, x)
-    assert output0 == output1 == output2 == output3
+    output2 = JuliaFunction.apply(f2, x)
+    # folks should be able to perform multiplication by 2 precisely
+    assert torch.all(output0 == output1 == output2)
 
     # gradcheck takes a tuple of tensors as input, check if your gradient
     # evaluated with these tensors are close enough to numerical
