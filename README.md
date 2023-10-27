@@ -39,7 +39,7 @@ True
 
 ## Using Julia's differential equation solvers in PyTorch
 
-```pycon
+```python
 from juliatorch import JuliaFunction
 
 import juliacall, torch
