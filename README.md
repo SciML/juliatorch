@@ -13,15 +13,12 @@ For bug reports, feature requests, etc., please submit an issue.
 
 ## Installation
 
-...
-
 To install juliatorch, use pip:
 
 ```
 pip install https://github.com/LilithHafner/juliatorch
 ```
 
-and you're good!
 <!--
 ## Collab Notebook Examples
 
