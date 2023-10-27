@@ -13,14 +13,13 @@ For bug reports, feature requests, etc., please submit an issue.
 
 ## Installation
 
-To install juliatorch, use pip:
+To install juliatorch, use Python 3.11 and pip:
 
 ```
 pip install git+https://github.com/LilithHafner/juliatorch.git
 ```
-Pytorch doesn't support python 3.12, so neither can this package. Use Python 3.11 instead.
 
-## General Flow
+## Example usage
 
 ```pycon
 >>> from juliatorch import JuliaFunction
@@ -53,6 +52,8 @@ True
   including `collections.abc.Iterator`. This causes pytorch to incorrectly treat julia
   functions as iterators. You can work around this by wrapping your Julia functions in
   python functions like this `py_f = lambda x: jl_f(x)`.
+
+- Pytorch doesn't support python 3.12, so neither can this package. Use Python 3.11 instead.
 
 ## Testing
 
