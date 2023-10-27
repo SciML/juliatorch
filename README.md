@@ -1,6 +1,6 @@
 # JuliaTorch
 
-[![CI](https://github.com/LilithHafner/juliatorch/workflows/CI/badge.svg)](https://github.com/LilithHafner/juliatorch/actions)
+[![CI](https://github.com/SciML/juliatorch/workflows/CI/badge.svg)](https://github.com/SciML/juliatorch/actions)
 
 juliatorch lets you convert [Julia](https://julialang.org/) functions to
 [PyTorch `autograd.Function`s](https://pytorch.org/docs/stable/autograd.html), automatically
@@ -16,7 +16,7 @@ For bug reports, feature requests, etc., please submit an issue.
 To install juliatorch, use Python 3.11 and pip:
 
 ```
-pip install git+https://github.com/LilithHafner/juliatorch.git
+pip install git+https://github.com/SciML/juliatorch.git
 ```
 
 ## Example usage
