@@ -16,7 +16,26 @@ For bug reports, feature requests, etc., please submit an issue.
 To install juliatorch, use pip:
 
 ```
-pip install https://github.com/LilithHafner/juliatorch
+pip install git+https://github.com/LilithHafner/juliatorch.git
+```
+Pytorch doesn't support python 3.12, so neither can this package. Use Python 3.11 instead.
+
+## General Flow
+
+```pycon
+>>> from juliatorch import JuliaFunction
+>>> import juliacall, torch
+>>> f = juliacall.Main.seval("f(x) = exp.(-x .^ 2)")
+>>> py_f = lambda x: f(x)
+>>> x = torch.randn(3, 3, dtype=torch.double, requires_grad=True)
+>>> JuliaFunction.apply(f, x)
+tensor([[0.8583, 0.9999, 0.9712],
+        [0.7043, 0.1852, 0.6042],
+        [0.9968, 0.8472, 0.9913]], dtype=torch.float64,
+       grad_fn=<JuliaFunctionBackward>)
+>>> from torch.autograd import gradcheck
+>>> gradcheck(JuliaFunction.apply, (py_f, x), eps=1e-6, atol=1e-4)
+True
 ```
 
 <!--
@@ -24,36 +43,16 @@ pip install https://github.com/LilithHafner/juliatorch
 
 - [Solving the Lorenz equation faster than SciPy+Numba](https://colab.research.google.com/drive/1SQCu1puMQO01i3oMg0TXfa1uf7BqgsEW?usp=sharing)
 
-## General Flow
-
-Import and setup the solvers available in *DifferentialEquations.jl* via the command:
-
-```py
-from juliatorch import de
-```
-In case only the solvers available in *OrdinaryDiffEq.jl* are required then use the command:
-```py
-from juliatorch import ode
-```
-The general flow for using the package is to follow exactly as would be done
-in Julia, except add `de.` or `ode.` in front. Note that `ode.` has lesser loading time and a smaller memory footprint compared to `de.`.
-Most of the commands will work without any modification. Thus
-[the DifferentialEquations.jl documentation](https://github.com/SciML/DifferentialEquations.jl)
-and the [DiffEqTutorials](https://github.com/SciML/DiffEqTutorials.jl)
-are the main in-depth documentation for this package. Below we will show how to
-translate these docs to Python code. -->
+-->
 
 ### Benchmark
 
-## GPU Backend Choices
-
 ## Known Limitations
 
-- Autodiff does not work on Python functions. When applicable, either define the derivative function
-  as a Julia function or set the algorithm to use finite differencing, i.e. `Rodas5(autodiff=false)`.
-  All default methods use autodiff.
-- Delay differential equations have to use Julia-defined functions otherwise the history function is
-  not appropriately typed with the overloads.
+- Julia functions are falsely reported as subclassess of many abstract base classes,
+  including `collections.abc.Iterator`. This causes pytorch to incorrectly treat julia
+  functions as iterators. You can work around this by wrapping your Julia functions in
+  python functions like this `py_f = lambda x: jl_f(x)`.
 
 ## Testing
 
