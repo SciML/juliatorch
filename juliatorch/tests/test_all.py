@@ -14,7 +14,8 @@ def test_gradcheck_of_trivial_function():
     output1 = JuliaFunction.apply(f, x)
     output2 = JuliaFunction.apply(f2, x)
     # folks should be able to perform multiplication by 2 precisely
-    assert torch.all(output0 == output1 == output2)
+    assert torch.all(torch.eq(output0, output1))
+    assert torch.all(torch.eq(output0, output2))
 
     # gradcheck takes a tuple of tensors as input, check if your gradient
     # evaluated with these tensors are close enough to numerical
