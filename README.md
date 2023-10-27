@@ -15,19 +15,11 @@ For bug reports, feature requests, etc., please submit an issue.
 
 ...
 
-<!-- To install juliatorch, use pip:
+To install juliatorch, use pip:
 
 ```
-pip install juliatorch
+pip install https://github.com/LilithHafner/juliatorch
 ```
-
-To install Julia packages required (and Julia if needed) for juliatorch, open up Python
-interpreter then run:
-
-```pycon
->>> import juliatorch
->>> juliatorch.install()
-``` -->
 
 and you're good!
 <!--
