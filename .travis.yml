@@ -1,0 +1,13 @@
+language: python
+os:
+  - linux
+notifications:
+  email: false
+before_install:
+  - pip install --quiet tox
+script:
+  - tox -- --cov diffeqpy
+jobs:
+  include:
+    - env: TOXENV=py3
+      python: "3.11"
