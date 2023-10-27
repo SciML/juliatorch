@@ -15,7 +15,7 @@ setup(name='juliatorch',
         'Programming Language :: Python :: 3.11',
         'Topic :: Scientific/Engineering :: Artificial Intelligence'
       ],
-      url='http://github.com/LilithHafner/juliatorch',
+      url='http://github.com/SciML/juliatorch',
       keywords='pytorch julia autograd ad',
       author='Lilith Hafner',
       # author_email='contact@juliadiffeq.org',
