@@ -97,7 +97,10 @@ print(gradcheck(JuliaFunction.apply, (py_f, x), eps=1e-6, atol=1e-4))
   functions as iterators. You can work around this by wrapping your Julia functions in
   python functions like this `py_f = lambda x: jl_f(x)`.
 
-- Pytorch doesn't support python 3.12, so neither can this package. Use Python 3.11 instead.
+- PyTorch doesn't support python 3.12, so neither can this package. Use Python 3.11 instead.
+
+- The Julia function must accept a single Matrix as input as return a single Matrix as
+  output
 
 ## Testing
 
