@@ -25,7 +25,6 @@ pip install git+https://github.com/SciML/juliatorch.git
 >>> from juliatorch import JuliaFunction
 >>> import juliacall, torch
 >>> f = juliacall.Main.seval("f(x) = exp.(-x .^ 2)")
->>> py_f = lambda x: f(x)
 >>> x = torch.randn(3, 3, dtype=torch.double, requires_grad=True)
 >>> JuliaFunction.apply(f, x)
 tensor([[0.8583, 0.9999, 0.9712],
@@ -33,6 +32,7 @@ tensor([[0.8583, 0.9999, 0.9712],
         [0.9968, 0.8472, 0.9913]], dtype=torch.float64,
        grad_fn=<JuliaFunctionBackward>)
 >>> from torch.autograd import gradcheck
+>>> py_f = lambda x: f(x)
 >>> gradcheck(JuliaFunction.apply, (py_f, x), eps=1e-6, atol=1e-4)
 True
 ```
@@ -177,8 +177,6 @@ plot(parameters, observations)
 
 -->
 
-### Benchmark
-
 ## Known Limitations
 
 - Julia functions are falsely reported as subclassess of many abstract base classes,
@@ -188,7 +186,7 @@ plot(parameters, observations)
 
 - PyTorch doesn't support python 3.12, so neither can this package. Use Python 3.11 instead.
 
-- The Julia function must accept a single Matrix as input as return a single Matrix as
+- The Julia function must accept a single Matrix as input and return a single Matrix as
   output
 
 ## Testing
