@@ -189,6 +189,49 @@ plot(parameters, observations)
 - The Julia function must accept a single Matrix as input and return a single Matrix as
   output
 
+- **Gradients only flow through explicit inputs**: When using `JuliaFunction.apply(f, x)`,
+  gradients are only computed with respect to `x`. If your function `f` references PyTorch
+  tensors from an outer scope (captured via closure), those tensors will NOT receive gradients.
+
+  This is a fundamental limitation: juliatorch uses Julia's ForwardDiff.jl for differentiation,
+  which works by passing "dual numbers" through your function. External tensors captured in
+  closures are invisible to ForwardDiff and cannot participate in gradient computation.
+
+  **Example of what doesn't work:**
+  ```python
+  m = torch.tensor(1., requires_grad=True)  # External parameter
+  x = torch.tensor(2., requires_grad=True)
+
+  def f(v):
+      # m is captured from outer scope - NO gradient will flow to m
+      return m.item() * v + 1.0
+
+  y = JuliaFunction.apply(f, x)
+  y.backward()
+  print(m.grad)  # None - no gradient!
+  print(x.grad)  # Works - gradient computed
+  ```
+
+  **Workaround**: Pass all parameters that need gradients explicitly as part of the input tensor:
+  ```python
+  m = torch.tensor(1., requires_grad=True)
+  x = torch.tensor(2., requires_grad=True)
+
+  def f(v):
+      # All differentiable values come from input tensor
+      m_val, x_val = v[0], v[1]
+      return m_val * x_val + 1.0
+
+  # Concatenate all parameters into a single input tensor
+  inputs = torch.stack([m, x])
+  y = JuliaFunction.apply(f, inputs)
+  y.backward()
+  print(m.grad)  # Now works!
+  print(x.grad)  # Works
+  ```
+
+  See [issue #13](https://github.com/SciML/juliatorch/issues/13) for more discussion.
+
 ## Testing
 
 Unit tests can be run by [`tox`](http://tox.readthedocs.io).
